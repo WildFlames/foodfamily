@@ -41,11 +41,12 @@ public class MenuController {
 		} else {
 			List<Product> menuItems = menuItemRepository.findAllByCategoryIdAndLocale(id, locale);
 			model.addAttribute("menuItems", menuItems);
+			Category type = categoryRepository.findOne(id);
+			model.addAttribute("type", type.getType());
 		}
 
 		List<Category> categories = categoryRepository.findAll();
 		model.addAttribute("categories", categories);
-		model.addAttribute("id", id);
 		return "menu";
 	}
 

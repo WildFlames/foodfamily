@@ -4,13 +4,13 @@
 
 <div class="row filters">
 	<div class="col-6 col-sm">
-		<form class="filter1" method="post">
+		<form class="filter2" method="post">
 			<input type="hidden" name="_csrf" value="${_csrf.token}" />
      			   <select id="inlineFormCustomSelect" name="id" onchange="submit()">
-     				  <option value="" hidden selected><@spring.message "text.choose category"/>:</option>
-     				  <option value=""><@spring.message "text.dishes"/></option>
+     				 		<option value="" hidden selected><#if type??><@spring.message type/><#else><@spring.message "text.dishes"/></#if></option>
+     				 		<option value=""><@spring.message "text.dishes"/></option>
 						<#list categories as category>
-     					  <option value="${category.id}"> <@spring.message category.type/></option>
+     						<option value="${category.id}"><@spring.message category.type/></option>
   						</#list>
    				   </select>
 		</form>
@@ -20,9 +20,9 @@
 		<form class="filter2" method="post">
 			<input type="hidden" name="_csrf" value="${_csrf.token}" />
      			   <select id="inlineFormCustomSelect" name="id" onchange="submit()">
-						<#list categories as category>
-     				 		<option value="" hidden selected><#if id??><@spring.message id/><#else><@spring.message "text.dishes"/></#if>:</option>
+     				 		<option value="" hidden selected><#if type??><@spring.message type/><#else><@spring.message "text.dishes"/></#if></option>
      				 		<option value=""><@spring.message "text.dishes"/></option>
+						<#list categories as category>
      						<option value="${category.id}"><@spring.message category.type/></option>
   						</#list>
    				   </select>

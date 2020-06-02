@@ -23,19 +23,19 @@ public class AbstractProductController extends HttpServlet {
 
 	private static final long serialVersionUID = 7880098522334685829L;
 	
+	@Autowired
+	public OrderService orderService;
+
+	@GetMapping("/")
+	public String homePage() {
+		return "redirect:menu";
+	}
 	@PostMapping("/")
-		public String localization(@RequestParam(name = "lang", required = false) String locale, HttpSession session, HttpServletRequest request) {
+	public String localization(@RequestParam(name = "lang", required = false) String locale, HttpSession session,
+			HttpServletRequest request) {
 		session.setAttribute("lang", locale);
 		return "redirect:" + request.getHeader("referer");
 	}
-	@GetMapping("/")
-	public String homePage(){
-		return "redirect:/menu";
-	}
-	
-
-	@Autowired
-	public OrderService orderService;
 
 	public ShoppingCart getCurrentShoppingCart(HttpServletRequest req) {
 		ShoppingCart shoppingCart = SessionUtils.getCurrentShoppingCart(req);

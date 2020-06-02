@@ -4,11 +4,11 @@
 
 <div class="row filters">
 	<div class="col-6 col-sm">
-		<form class="filter2" method="post">
+		<form method="post">
 			<input type="hidden" name="_csrf" value="${_csrf.token}" />
-     			   <select id="inlineFormCustomSelect" name="id" onchange="submit()">
+     			   <select name="id" onchange="submit()">
      				 		<option value="" hidden selected><#if type??><@spring.message type/><#else><@spring.message "text.dishes"/></#if></option>
-     				 		<option value=""><@spring.message "text.dishes"/></option>
+     				 		<option value="0"><@spring.message "text.dishes"/></option>
 						<#list categories as category>
      						<option value="${category.id}"><@spring.message category.type/></option>
   						</#list>
@@ -17,14 +17,16 @@
     </div>
     
 	<div class="col-6 col-sm">
-		<form class="filter2" method="post">
+		<form method="post">
 			<input type="hidden" name="_csrf" value="${_csrf.token}" />
-     			   <select id="inlineFormCustomSelect" name="id" onchange="submit()">
-     				 		<option value="" hidden selected><#if type??><@spring.message type/><#else><@spring.message "text.dishes"/></#if></option>
-     				 		<option value=""><@spring.message "text.dishes"/></option>
-						<#list categories as category>
-     						<option value="${category.id}"><@spring.message category.type/></option>
-  						</#list>
+     			   <select name="filterId" onchange="submit()">
+     				 		<option value="" hidden selected><@spring.message "text.most rated"/></option>
+     						<option value="1"><@spring.message "text.by price"/> 🔼</option>
+     						<option value="2"><@spring.message "text.by price"/> 🔽</option>
+     				 		<option value="3"><@spring.message "text.most popular"/></option>
+     						<option value="4"><@spring.message "text.most rated"/></option>
+     						<option value="5"><@spring.message "text.newest"/></option>
+     						<option value="6"><@spring.message "text.promotional"/></option>
    				   </select>
 		</form>
     </div>
@@ -32,23 +34,23 @@
 
 <div class="goods">
 	<ul class="goods_grid">
-		<#list menuItems as menuItem>
+		<#list page.content as product>
 			<li	class="goods_cell">
 				<div class="goods_tile">
-					<div id="product${menuItem.id}" class="product">
+					<div id="product${product.id}" class="product">
 						<div class="product-image">
-							<img src="static/${menuItem.link}" alt="">
+							<img src="static/${product.link}" alt="">
 						</div>	
 					<div class="desc">
 						<div class="cell">
 							<p>
-								<span class="title">Details</span> ${menuItem.messagekey}
+								<span class="title">Details</span> ${product.messagekey}
 							</p>
 						</div>
 					</div>
-					<div class="name pt-2" style:"white-space: pre-line;">${menuItem.content}</div>
-					<div class="price"> ${menuItem.price} ₴</div>
-					<a class="btn buy-btn mt-1" data-id-product="${menuItem.id }" style="background:#247b2d; color:white; cursor: pointer;"><@spring.message "text.add to cart"/></a>
+					<div class="name pt-2" style:"white-space: pre-line;">${product.content}</div>
+					<div class="price"> ${product.price} ₴</div>
+					<a class="btn buy-btn mt-1" data-id-product="${product.id }" style="background:#247b2d; color:white; cursor: pointer;"><@spring.message "text.add to cart"/></a>
 				</div>
 			</li>
 		</#list>

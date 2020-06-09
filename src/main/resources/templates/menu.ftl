@@ -6,7 +6,7 @@
 	<div class="col-6 col-sm">
 		<form method="post">
 			<input type="hidden" name="_csrf" value="${_csrf.token}" />
-     			   <select name="id" onchange="submit()">
+     			   <select name="categoryId" onchange="submit()">
      				 		<option value="" hidden selected><#if type??><@spring.message type/><#else><@spring.message "text.dishes"/></#if></option>
      				 		<option value="0"><@spring.message "text.dishes"/></option>
 						<#list categories as category>
@@ -20,13 +20,10 @@
 		<form method="post">
 			<input type="hidden" name="_csrf" value="${_csrf.token}" />
      			   <select name="filterId" onchange="submit()">
-     				 		<option value="" hidden selected><@spring.message "text.most rated"/></option>
-     						<option value="1"><@spring.message "text.by price"/> 🔼</option>
-     						<option value="2"><@spring.message "text.by price"/> 🔽</option>
-     				 		<option value="3"><@spring.message "text.most popular"/></option>
-     						<option value="4"><@spring.message "text.most rated"/></option>
-     						<option value="5"><@spring.message "text.newest"/></option>
-     						<option value="6"><@spring.message "text.promotional"/></option>
+     				 		<option value="" hidden selected><@spring.message filters/></option>
+     						<option value="0"><@spring.message "text.from cheap"/></option>
+     						<option value="1"><@spring.message "text.from expensive"/></option>
+     						<option value="2"><@spring.message "text.newest"/></option>
    				   </select>
 		</form>
     </div>

@@ -23,26 +23,34 @@ public class ProductService {
 		Page<Product> productList = null;
 		if (id == 0) {
 			switch (filterId) {
-			case 1:
+			case 0:
 				productList = productRepository.findAllByLocale(locale,
 						PageRequest.of(0, 12, Sort.by(Sort.Direction.ASC, "price")));
 				break;
-			case 2:
+			case 1:
 				productList = productRepository.findAllByLocale(locale,
 						PageRequest.of(0, 12, Sort.by(Sort.Direction.DESC, "price")));
+				break;
+			case 2:
+				productList = productRepository.findAllByLocale(locale,
+						PageRequest.of(0, 12, Sort.by(Sort.Direction.DESC, "id")));
 				break;
 			default:
 				break;
-			}	
-		} else if(id != null) {
+			}
+		} else {
 			switch (filterId) {
-			case 1:
+			case 0:
 				productList = productRepository.findAllByCategoryIdAndLocale(id, locale,
 						PageRequest.of(0, 12, Sort.by(Sort.Direction.ASC, "price")));
 				break;
-			case 2:
+			case 1:
 				productList = productRepository.findAllByCategoryIdAndLocale(id, locale,
 						PageRequest.of(0, 12, Sort.by(Sort.Direction.DESC, "price")));
+				break;
+			case 2:
+				productList = productRepository.findAllByCategoryIdAndLocale(id, locale,
+						PageRequest.of(0, 12, Sort.by(Sort.Direction.DESC, "id")));
 				break;
 			default:
 				break;

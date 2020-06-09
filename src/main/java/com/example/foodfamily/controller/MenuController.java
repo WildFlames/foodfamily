@@ -20,6 +20,7 @@ import com.example.foodfamily.service.ProductService;
 
 @Controller
 public class MenuController {
+	String[] filters = { "text.from cheap", "text.from expensive", "text.newest" };
 
 	@Autowired
 	private ProductService productService;
@@ -29,11 +30,10 @@ public class MenuController {
 
 	@GetMapping("menu")
 	public String menuShow(HttpSession session, Model model, HttpServletRequest request) {
-
 		List<Category> categories = categoryRepository.findAll();
 		Page<Product> page = null;
 		String locale = (String) session.getAttribute("lang");
-		Long id = (Long) session.getAttribute("id");
+		Long categoryId = (Long) session.getAttribute("categoryId");
 		Integer filterId = (Integer) session.getAttribute("filterId");
 
 		if (locale == null) {
@@ -41,24 +41,24 @@ public class MenuController {
 			locale = (String) session.getAttribute("lang");
 		}
 		if (filterId == null) {
-			session.setAttribute("filterId", 1);
+			session.setAttribute("filterId", 2);
 			filterId = (Integer) session.getAttribute("filterId");
 		}
-		if (id == null) {
-			session.setAttribute("id", 0L);
-			id = (Long) session.getAttribute("id");
-		}	
-		if (id != 0) {
-			Category type = categoryRepository.findOne(id);
+		if (categoryId == null) {
+			session.setAttribute("categoryId", 0L);
+			categoryId = (Long) session.getAttribute("categoryId");
+		}
+		if (categoryId != 0) {
+			Category type = categoryRepository.findOne(categoryId);
 			model.addAttribute("type", type.getType());
 		}
 
-		page = productService.filter(locale, filterId, id);
+		page = productService.filter(locale, filterId, categoryId);
 
 		for (Product product : page) {
 			request.setAttribute("product", productService.findProductById(product.getId()));
 		}
-
+		model.addAttribute("filters", filters[filterId]);
 		model.addAttribute("categories", categories);
 		request.setAttribute("page", page);
 		model.addAttribute("url", "/menu");
@@ -66,11 +66,11 @@ public class MenuController {
 	}
 
 	@PostMapping("menu")
-	public void menuGetFilter(@RequestParam(name = "id", required = false) Long id,
+	public void menuGetFilter(@RequestParam(name = "categoryId", required = false) Long categoryId,
 			@RequestParam(name = "filterId", required = false) Integer filterId, Model model, HttpSession session,
 			HttpServletRequest request) {
-		if (id != null) {
-			session.setAttribute("id", id);
+		if (categoryId != null) {
+			session.setAttribute("categoryId", categoryId);
 		}
 		if (filterId != null) {
 			session.setAttribute("filterId", filterId);

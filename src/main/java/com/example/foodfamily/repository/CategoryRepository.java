@@ -13,5 +13,5 @@ public interface CategoryRepository extends CrudRepository<Category, Long>  {
 	List<Category> findAll();
 	
 	@Query("select c from Category c where c.id = :idCategory")
-	Category findOne(@Param("idCategory") Long idCategory);
+	Category findOne(@Param("idCategory") Long id);
 }
